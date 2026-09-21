@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="T-Whisper logo">
+  <defs>
+    <linearGradient id="background" x1="96" y1="72" x2="928" y2="952" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#392D9D"/>
+      <stop offset="0.52" stop-color="#1E1B61"/>
+      <stop offset="1" stop-color="#0C1030"/>
+    </linearGradient>
+    <linearGradient id="bubble" x1="224" y1="260" x2="804" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#897CFF"/>
+      <stop offset="0.55" stop-color="#5D57E8"/>
+      <stop offset="1" stop-color="#35BFE1"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="224" fill="url(#background)"/>
+  <circle cx="512" cy="512" r="380" fill="#796FFF" fill-opacity="0.10"/>
+  <path d="M270 246h484c60 0 108 48 108 108v216c0 60-48 108-108 108H532L392 806c-24 22-64 4-64-28V678h-58c-60 0-108-48-108-108V354c0-60 48-108 108-108Z" fill="url(#bubble)"/>
+  <path d="M270 246h484c60 0 108 48 108 108v216c0 60-48 108-108 108H532L392 806c-24 22-64 4-64-28V678h-58c-60 0-108-48-108-108V354c0-60 48-108 108-108Z" fill="none" stroke="#FFFFFF" stroke-opacity="0.24" stroke-width="4"/>
+  <rect x="340" y="442" width="58" height="92" rx="29" fill="#FFFFFF"/>
+  <rect x="435" y="388" width="58" height="200" rx="29" fill="#FFFFFF"/>
+  <rect x="530" y="342" width="58" height="292" rx="29" fill="#FFFFFF"/>
+  <rect x="625" y="408" width="58" height="160" rx="29" fill="#FFFFFF"/>
+</svg>
