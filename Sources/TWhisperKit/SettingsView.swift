@@ -9,23 +9,38 @@ public struct SettingsView: View {
     }
 
     public var body: some View {
-        TabView {
-            GeneralSettingsTab(model: model)
-                .tabItem { Label("General", systemImage: "gearshape") }
+        VStack(spacing: 0) {
+            TabView {
+                GeneralSettingsTab(model: model)
+                    .tabItem { Label("General", systemImage: "gearshape") }
 
-            DictationSettingsTab(model: model)
-                .tabItem { Label("Dictation", systemImage: "waveform") }
+                DictationSettingsTab(model: model)
+                    .tabItem { Label("Dictation", systemImage: "waveform") }
 
-            SnippetsSettingsTab(model: model)
-                .tabItem { Label("Snippets", systemImage: "text.badge.plus") }
+                SnippetsSettingsTab(model: model)
+                    .tabItem { Label("Snippets", systemImage: "text.badge.plus") }
 
-            ShortcutsSettingsTab(model: model)
-                .tabItem { Label("Shortcuts", systemImage: "keyboard") }
+                ShortcutsSettingsTab(model: model)
+                    .tabItem { Label("Shortcuts", systemImage: "keyboard") }
 
-            PrivacySettingsTab()
-                .tabItem { Label("Privacy", systemImage: "lock.shield") }
+                PrivacySettingsTab()
+                    .tabItem { Label("Privacy", systemImage: "lock.shield") }
+            }
+            .frame(width: 520, height: 520)
+
+            Divider()
+            Text(Self.versionText)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .padding(.vertical, 6)
         }
-        .frame(width: 520, height: 520)
+    }
+
+    private static var versionText: String {
+        let info = Bundle.main.infoDictionary
+        let shortVersion = info?["CFBundleShortVersionString"] as? String ?? "—"
+        let build = info?["CFBundleVersion"] as? String ?? "—"
+        return "Version \(shortVersion) (\(build))"
     }
 }
 
