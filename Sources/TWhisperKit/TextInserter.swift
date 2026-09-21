@@ -83,8 +83,11 @@ final class TextInserter {
         return range
     }
 
-    /// Role, subrole, enabled and settability checks for an already-focus-verified element.
-    private static func isVerifiedEditable(_ element: AXUIElement) -> Bool {
+    /// Role, subrole and enabled checks for an already-focus-verified element that is safe to
+    /// receive a paste. Browsers commonly expose a focused text control without making its AX
+    /// text or value attributes settable, so setter capability is deliberately checked only
+    /// immediately before the direct-write path.
+    private static func isVerifiedPasteTarget(_ element: AXUIElement) -> Bool {
         var roleRef: CFTypeRef?
         guard AXUIElementCopyAttributeValue(element, kAXRoleAttribute as CFString, &roleRef) == .success,
               let role = roleRef as? String else {
@@ -106,18 +109,13 @@ final class TextInserter {
               let enabled = enabledRef as? Bool, enabled else {
             return false
         }
-
-        var settableSelectedText: DarwinBoolean = false
-        AXUIElementIsAttributeSettable(element, kAXSelectedTextAttribute as CFString, &settableSelectedText)
-        var settableValue: DarwinBoolean = false
-        AXUIElementIsAttributeSettable(element, kAXValueAttribute as CFString, &settableValue)
-        return settableSelectedText.boolValue || settableValue.boolValue
+        return true
     }
 
     /// Recheck performed immediately before every insertion attempt, and again immediately
     /// before posting a paste keystroke: trust, same frontmost process, same focused element
-    /// (`CFEqual`), same selection range when one was captured, and a verified editable,
-    /// non-secure target. Returns `nil` immediately when `target.element` is `nil` — there is
+    /// (`CFEqual`), same selection range when one was captured, and a verified non-secure
+    /// text target. Returns `nil` immediately when `target.element` is `nil` — there is
     /// nothing to check against, so callers fall back to `verifyFrontmost` instead.
     private static func verify(_ target: InsertionTarget) -> AXUIElement? {
         guard let capturedElement = target.element else { return nil }
@@ -144,7 +142,7 @@ final class TextInserter {
             }
         }
 
-        guard isVerifiedEditable(currentElement) else { return nil }
+        guard isVerifiedPasteTarget(currentElement) else { return nil }
         return currentElement
     }
 
